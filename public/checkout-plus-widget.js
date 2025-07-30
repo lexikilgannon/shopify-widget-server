@@ -36,13 +36,13 @@ if (!checkoutButton) {
       }),
     });
 
-    // Redirect to checkout after insurance added
     window.location.href = "/checkout";
   };
 
-  // Inject above the existing checkout button
   checkoutButton.parentNode.insertBefore(plusButton, checkoutButton);
+}
 
+// 🔽 Drawer logic moved OUTSIDE the if/else blocks
 function injectIntoCartDrawer() {
   const drawer = document.querySelector("cart-drawer, .cart-drawer, #CartDrawer");
   if (!drawer) return;
@@ -53,7 +53,6 @@ function injectIntoCartDrawer() {
     return;
   }
 
-  // Prevent duplicate button
   if (drawer.querySelector("#checkout-plus-button")) {
     console.log("🔁 Checkout Plus button already exists in drawer");
     return;
@@ -82,7 +81,6 @@ function injectIntoCartDrawer() {
     window.location.href = "/checkout";
   };
 
-  // Inject just above the standard checkout button
   checkoutButton.parentNode.insertBefore(plusButton, checkoutButton);
 }
 
@@ -94,6 +92,3 @@ observer.observe(document.body, {
   childList: true,
   subtree: true,
 });
-
-
-}
