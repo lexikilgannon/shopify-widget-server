@@ -42,4 +42,52 @@ if (!checkoutButton) {
 
   // Inject above the existing checkout button
   checkoutButton.parentNode.insertBefore(plusButton, checkoutButton);
+
+function injectIntoCartDrawer() {
+  const drawer = document.querySelector("cart-drawer, .cart-drawer, #CartDrawer"); // adapt for your theme
+  if (!drawer) return;
+
+  const checkoutButton = drawer.querySelector('button[name="checkout"]');
+
+  if (!checkoutButton) return;
+
+  // Prevent duplicate buttons
+  if (drawer.querySelector("#checkout-plus-button")) return;
+
+  const plusButton = document.createElement("button");
+  plusButton.id = "checkout-plus-button";
+  plusButton.innerText = "Checkout Plus (with insurance)";
+  plusButton.className = checkoutButton.className;
+  plusButton.style.backgroundColor = "#1a1a1a";
+  plusButton.style.marginBottom = "10px";
+
+  plusButton.onclick = async () => {
+    await fetch("/cart/add.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        id: insuranceVariantId,
+        quantity: 1,
+      }),
+    });
+
+    window.location.href = "/checkout";
+  };
+
+  checkoutButton.parentNode.insertBefore(plusButton, checkoutButton);
+}
+
+// MutationObserver to detect when drawer appears
+const observer = new MutationObserver(() => {
+  injectIntoCartDrawer();
+});
+
+observer.observe(document.body, {
+  childList: true,
+  subtree: true,
+});
+
 }
