@@ -44,15 +44,20 @@ if (!checkoutButton) {
   checkoutButton.parentNode.insertBefore(plusButton, checkoutButton);
 
 function injectIntoCartDrawer() {
-  const drawer = document.querySelector("cart-drawer, .cart-drawer, #CartDrawer"); // adapt for your theme
+  const drawer = document.querySelector("cart-drawer, .cart-drawer, #CartDrawer");
   if (!drawer) return;
 
-  const checkoutButton = drawer.querySelector('button[name="checkout"]');
+  const checkoutButton = drawer.querySelector("#CartDrawer-Checkout");
+  if (!checkoutButton) {
+    console.log("❌ Cart drawer checkout button not found");
+    return;
+  }
 
-  if (!checkoutButton) return;
-
-  // Prevent duplicate buttons
-  if (drawer.querySelector("#checkout-plus-button")) return;
+  // Prevent duplicate button
+  if (drawer.querySelector("#checkout-plus-button")) {
+    console.log("🔁 Checkout Plus button already exists in drawer");
+    return;
+  }
 
   const plusButton = document.createElement("button");
   plusButton.id = "checkout-plus-button";
@@ -77,10 +82,10 @@ function injectIntoCartDrawer() {
     window.location.href = "/checkout";
   };
 
+  // Inject just above the standard checkout button
   checkoutButton.parentNode.insertBefore(plusButton, checkoutButton);
 }
 
-// MutationObserver to detect when drawer appears
 const observer = new MutationObserver(() => {
   injectIntoCartDrawer();
 });
@@ -89,5 +94,6 @@ observer.observe(document.body, {
   childList: true,
   subtree: true,
 });
+
 
 }
