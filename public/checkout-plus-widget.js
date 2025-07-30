@@ -30,4 +30,8 @@
   }
 
   document.addEventListener('DOMContentLoaded', createWidget);
+
+  window.CheckoutPlusLoaded = true;
+  console.log("Checkout Plus script loaded");
+
 })();
