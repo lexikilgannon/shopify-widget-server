@@ -1,37 +1,45 @@
-(function () {
-  if (!window.location.pathname.includes('/cart')) return;
+window.CheckoutPlusLoaded = true;
+console.log("✅ Checkout Plus script loaded");
 
-  const insuranceVariantId = 44612488200364;
+const insuranceVariantId = 44612488200364;
 
-  function createWidget() {
-    const container = document.createElement('div');
-    container.style.marginTop = '20px';
-    container.innerHTML = `
-      <p style="margin-bottom: 10px;">✔ Add insurance to your order for $4.99</p>
-      <button id="checkout-plus-btn" style="background: black; color: white; padding: 10px 20px; font-weight: bold;">Checkout Plus</button>
-      <button id="standard-checkout-btn" style="margin-top: 10px; background: none; border: 1px solid #ccc; padding: 8px 20px;">Checkout Without Insurance</button>
-    `;
+const checkoutButton = document.querySelector("#checkout");
 
-    const cartForm = document.querySelector('form[action="/cart"]');
-    if (cartForm) cartForm.parentNode.insertBefore(container, cartForm.nextSibling);
+if (!checkoutButton) {
+  console.log("❌ Checkout button not found");
+} else {
+  console.log("✅ Checkout button found");
 
-    document.getElementById('checkout-plus-btn').onclick = async function () {
-      await fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: insuranceVariantId, quantity: 1 }),
-      });
-      window.location.href = '/checkout';
-    };
+  const plusButton = document.createElement("button");
+  plusButton.innerText = "Checkout Plus (with insurance)";
+  plusButton.style.backgroundColor = "#222";
+  plusButton.style.color = "white";
+  plusButton.style.border = "none";
+  plusButton.style.padding = "12px";
+  plusButton.style.marginBottom = "10px";
+  plusButton.style.width = "100%";
+  plusButton.style.fontWeight = "bold";
+  plusButton.style.cursor = "pointer";
 
-    document.getElementById('standard-checkout-btn').onclick = function () {
-      window.location.href = '/checkout';
-    };
-  }
+  plusButton.onclick = async () => {
+    console.log("🛒 Adding insurance to cart...");
 
-  document.addEventListener('DOMContentLoaded', createWidget);
+    await fetch("/cart/add.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        id: insuranceVariantId,
+        quantity: 1,
+      }),
+    });
 
-  window.CheckoutPlusLoaded = true;
-  console.log("Checkout Plus script loaded");
+    // Redirect to checkout after insurance added
+    window.location.href = "/checkout";
+  };
 
-})();
+  // Inject above the existing checkout button
+  checkoutButton.parentNode.insertBefore(plusButton, checkoutButton);
+}
