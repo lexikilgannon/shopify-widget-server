@@ -40,20 +40,32 @@ function makePlusButton(className) {
 
 // --- Drawer injection (#CartDrawer-Checkout) ---
 function injectIntoCartDrawer() {
+  console.log("🔍 Attempting to inject into cart drawer...");
+
   const drawer = document.querySelector("cart-drawer, .cart-drawer, #CartDrawer");
-  if (!drawer) return;
+  if (!drawer) {
+    console.log("❌ Drawer element not found.");
+    return;
+  }
 
   const checkoutButton = drawer.querySelector("#CartDrawer-Checkout");
   if (!checkoutButton) {
-    // Drawer might still be hydrating; observer will try again.
+    console.log("❌ Checkout button not found inside drawer.");
+    console.log("👁 Drawer HTML preview:", drawer.innerHTML.slice(0, 300));
     return;
   }
-  if (drawer.querySelector("#checkout-plus-button")) return;
+
+  if (drawer.querySelector("#checkout-plus-button")) {
+    console.log("🔁 Checkout Plus button already injected.");
+    return;
+  }
+
+  console.log("✅ Injecting Checkout Plus in cart drawer...");
 
   const plusButton = makePlusButton(checkoutButton.className);
   checkoutButton.parentNode.insertBefore(plusButton, checkoutButton);
-  console.log("✅ Injected Checkout Plus in cart drawer.");
 }
+
 
 // Observe DOM changes so we can inject after the drawer renders/re-renders
 const observer = new MutationObserver(() => {
