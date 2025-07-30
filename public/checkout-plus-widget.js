@@ -1,7 +1,7 @@
 (function () {
   if (!window.location.pathname.includes('/cart')) return;
 
-  const insuranceVariantId = YOUR_VARIANT_ID;
+  const insuranceVariantId = 44612488200364;
 
   function createWidget() {
     const container = document.createElement('div');
