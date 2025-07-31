@@ -7,13 +7,39 @@ const insuranceVariantId = 44612488200364;
 
 // Shared handler
 async function addInsuranceThenCheckout() {
-  await fetch("/cart/add.js", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({ id: insuranceVariantId, quantity: 1 }),
-  });
-  window.location.href = "/checkout";
+  try {
+    const response = await fetch("/cart/add.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        items: [
+          {
+            id: insuranceVariantId,
+            quantity: 1,
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("❌ Failed to add insurance:", errorData);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("✅ Insurance added to cart:", data);
+
+    // ✅ Now that insurance is in cart, redirect
+    window.location.href = "/checkout";
+  } catch (err) {
+    console.error("❌ Error adding insurance to cart:", err);
+  }
 }
+
 
 function makePlusButton(className) {
   const btn = document.createElement("button");
@@ -24,6 +50,7 @@ function makePlusButton(className) {
   btn.onclick = addInsuranceThenCheckout;
   return btn;
 }
+
 
 // --- Cart page injection (#checkout) ---
 (function injectOnCartPage() {
