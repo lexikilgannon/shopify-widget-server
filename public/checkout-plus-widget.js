@@ -56,6 +56,7 @@ function makePlusButton(className) {
 
 function demoteDefaultCheckoutButton(customButtonElement) {
   const originalCheckoutButton = document.querySelector("#CartDrawer-Checkout") || document.querySelector("#checkout");
+  console.log("Demoting button... Found:", originalCheckoutButton);
 
   if (originalCheckoutButton) {
     originalCheckoutButton.style.display = "none";
@@ -73,6 +74,7 @@ function demoteDefaultCheckoutButton(customButtonElement) {
 
     customButtonElement.insertAdjacentElement("afterend", fallbackLink);
   }
+  
 }
 
 // --- Cart page injection (#checkout) ---
