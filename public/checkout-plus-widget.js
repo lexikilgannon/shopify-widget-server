@@ -48,6 +48,8 @@ function makePlusButton(className) {
   if (className) btn.className = className;
   btn.style.marginBottom = "10px";
   btn.onclick = addInsuranceThenCheckout;
+  // Defer demotion logic slightly to wait for DOM render
+  setTimeout(() => demoteDefaultCheckoutButton(btn), 50);
   demoteDefaultCheckoutButton(btn);
   return btn;
 }
