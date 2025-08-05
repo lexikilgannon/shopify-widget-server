@@ -48,7 +48,7 @@ function makePlusButton(className) {
   if (className) btn.className = className;
   btn.style.marginBottom = "10px";
   btn.onclick = addInsuranceThenCheckout;
-  demoteDefaultCheckoutButton(checkoutPlusButton);
+  demoteDefaultCheckoutButton(btn);
   return btn;
 }
 
