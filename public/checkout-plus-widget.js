@@ -51,7 +51,6 @@ function makePlusButton(className) {
   return btn;
 }
 
-
 // --- Cart page injection (#checkout) ---
 (function injectOnCartPage() {
   const checkoutButton = document.querySelector("#checkout");
@@ -91,6 +90,31 @@ function injectIntoCartDrawer() {
 
   const plusButton = makePlusButton(checkoutButton.className);
   checkoutButton.parentNode.insertBefore(plusButton, checkoutButton);
+
+//TESTING
+// Find the original Shopify checkout button
+const originalCheckoutButton = document.querySelector("#CartDrawer-Checkout") || document.querySelector("#checkout");
+
+if (originalCheckoutButton) {
+  originalCheckoutButton.style.display = "none"; // Hide the original button
+
+  // Create a smaller "Checkout without premium" link
+  const fallbackLink = document.createElement("a");
+  fallbackLink.href = "/checkout";
+  fallbackLink.textContent = "Checkout without premium";
+  fallbackLink.style.display = "block";
+  fallbackLink.style.marginTop = "10px";
+  fallbackLink.style.textAlign = "center";
+  fallbackLink.style.fontSize = "14px";
+  fallbackLink.style.color = "#666";
+  fallbackLink.style.textDecoration = "underline";
+  fallbackLink.style.cursor = "pointer";
+
+  // Insert it after your custom button
+  plusButton.insertAdjacentElement("afterend", fallbackLink);
+}
+//TESTING
+
 }
 
 
