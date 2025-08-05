@@ -45,6 +45,8 @@ function makePlusButton(className) {
   const btn = document.createElement("button");
   btn.id = "checkout-plus-button";
   btn.innerText = "Checkout Plus (with insurance)";
+  btn.style.display = "block";
+  btn.style.width = "100%"; // optional but helps on narrow containers
   if (className) btn.className = className;
   btn.style.marginBottom = "10px";
   btn.onclick = addInsuranceThenCheckout;
