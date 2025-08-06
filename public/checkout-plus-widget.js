@@ -53,7 +53,17 @@ function makePlusButton(className) {
   // Defer demotion logic slightly to wait for DOM render
   setTimeout(() => demoteDefaultCheckoutButton(btn), 50);
   demoteDefaultCheckoutButton(btn);
-  return btn;
+
+    // Create a wrapper to control layout
+  const wrapper = document.createElement("div");
+  wrapper.style.display = "flex";
+  wrapper.style.flexDirection = "column";
+  wrapper.style.gap = "8px";
+  wrapper.style.width = "100%";
+  wrapper.appendChild(btn);
+  wrapper.appendChild(fallbackLink);
+
+  return wrapper;
 }
 
 function demoteDefaultCheckoutButton(customButtonElement) {
