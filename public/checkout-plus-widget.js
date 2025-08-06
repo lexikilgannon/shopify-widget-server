@@ -41,6 +41,9 @@ async function addInsuranceThenCheckout() {
 }
 
 function makePlusButton(className) {
+  if (originalCheckoutButton) {
+    originalCheckoutButton.style.display = "none";
+  }
   const btn = document.createElement("button");
   btn.id = "checkout-plus-button";
   btn.innerText = "Checkout Plus (with insurance)";
@@ -50,8 +53,6 @@ function makePlusButton(className) {
   btn.style.width = "100%";
   btn.onclick = addInsuranceThenCheckout;
 
-  if (originalCheckoutButton) {
-    originalCheckoutButton.style.display = "none";
   const fallbackLink = document.createElement("a");
   fallbackLink.href = "/checkout";
   fallbackLink.textContent = "Checkout without premium";
@@ -62,7 +63,6 @@ function makePlusButton(className) {
   fallbackLink.style.color = "#666";
   fallbackLink.style.textDecoration = "underline";
   fallbackLink.style.cursor = "pointer";
-  }
 
   // Create a wrapper to control layout
   const wrapper = document.createElement("div");
@@ -75,6 +75,7 @@ function makePlusButton(className) {
 
   return wrapper;
 }
+
 
 /*
 function makePlusButton(className) {
