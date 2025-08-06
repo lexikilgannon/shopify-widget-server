@@ -41,6 +41,7 @@ async function addInsuranceThenCheckout() {
 }
 
 function makePlusButton(className) {
+  const originalCheckoutButton = document.querySelector("#CartDrawer-Checkout") || document.querySelector("#checkout");
   if (originalCheckoutButton) {
     originalCheckoutButton.style.display = "none";
   }
