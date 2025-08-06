@@ -40,7 +40,40 @@ async function addInsuranceThenCheckout() {
   }
 }
 
+function makePlusButton(className) {
+  const btn = document.createElement("button");
+  btn.id = "checkout-plus-button";
+  btn.innerText = "Checkout Plus (with insurance)";
+  if (className) btn.className = className;
+  btn.style.marginBottom = "10px";
+  btn.style.display = "block";
+  btn.style.width = "100%";
+  btn.onclick = addInsuranceThenCheckout;
 
+  const fallbackLink = document.createElement("a");
+  fallbackLink.href = "/checkout";
+  fallbackLink.textContent = "Checkout without premium";
+  fallbackLink.style.display = "block";
+  fallbackLink.style.marginTop = "5px";
+  fallbackLink.style.textAlign = "center";
+  fallbackLink.style.fontSize = "14px";
+  fallbackLink.style.color = "#666";
+  fallbackLink.style.textDecoration = "underline";
+  fallbackLink.style.cursor = "pointer";
+
+  // Create a wrapper to control layout
+  const wrapper = document.createElement("div");
+  wrapper.style.display = "flex";
+  wrapper.style.flexDirection = "column";
+  wrapper.style.gap = "8px";
+  wrapper.style.width = "100%";
+  wrapper.appendChild(btn);
+  wrapper.appendChild(fallbackLink);
+
+  return wrapper;
+}
+
+/*
 function makePlusButton(className) {
   const btn = document.createElement("button");
   btn.id = "checkout-plus-button";
@@ -87,7 +120,7 @@ function demoteDefaultCheckoutButton(customButtonElement) {
     customButtonElement.insertAdjacentElement("afterend", fallbackLink);
   }
   
-}
+}*/
 
 // --- Cart page injection (#checkout) ---
 (function injectOnCartPage() {
